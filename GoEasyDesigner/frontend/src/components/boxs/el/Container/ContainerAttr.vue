@@ -1,0 +1,43 @@
+<template>
+  <div class="属性表格">
+  <el-form
+      label-position="left"
+      label-width="100px"
+      style="max-width: 460px"
+  >
+      <component is="common-properties" :item="item"/>
+
+      <el-form-item label="span" v-if="props.item.span>=0">
+        <el-input-number v-model="props.item.占比" max="24" min="0"/>
+      </el-form-item>
+    </el-form>
+  </div>
+  <component is="common-event-component" :item="props.item"  :eventName="eventName"/>
+
+
+</template>
+<script setup>
+import {ref, defineProps, defineEmits} from "vue";
+
+const emits = defineEmits(["添加事件被选择"]); // 声明接受的事件
+const props = defineProps(['item']);
+
+
+let 事件索引 = ref(0)
+
+let eventName = ref([
+
+  {"label": "被单击", "value": "click"},
+  {"label": "鼠标左键被按下", "value": "mousedown"},
+  {"label": "鼠标左键被放开", "value": "mouseup"},
+  {"label": "被双击", "value": "dblclick"},
+  {"label": "鼠标右键被按下", "value": "contextmenu"},
+  {"label": "鼠标位置被移动", "value": "mousemove"},
+  {"label": "获得焦点", "value": "focus"},
+  {"label": "失去焦点", "value": "blur"},
+  {"label": "按下某键", "value": "keydown"},
+  {"label": "放开某键", "value": "keyup"},
+  {"label": "滚轮被滚动", "value": "mousewheel"}
+])
+
+</script>

@@ -1,13 +1,24 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: 部署 GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+#  push:
+#    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+#  push:
+#    paths-ignore:
+#      - '**/*.md'
+#      - '**/*.yml'
+#      - .gitignore
+#      - .editorconfig
+
+#  workflow_run:
+#    workflows: ["发布软件"]
+#    types:
+#      - completed
+
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -39,9 +50,12 @@ jobs:
             ${{ runner.os }}-js-
       - name: install
         run: |
-          cd GoEasyDesigner/frontend
+          cd GoEasyDesigner/frontend/src
+          ./update_github_latest_releases.sh          
+          cd ../
           npm i
           npm run build
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
@@ -49,6 +63,16 @@ jobs:
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
+      - name: Deploy file
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_path: './GoEasyDesigner/frontend/dist/*'
+          remote_path: '/config/www'
+          sftp_only: true
 
   # Deployment job
   deploy:

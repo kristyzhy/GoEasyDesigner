@@ -1,28 +1,24 @@
 <template>
-  <div class="Shape" ref="shapeRef">
-    <slot></slot>
+  <div ref="shapeRef" class="Shape">
     <div
-        v-if="nowIndex == index"
         v-for="(direction, index) in directions"
         :key="index"
         :class="['dot', direction]"
         :style="direction"
         @mousedown="mousedown(direction, $event)"
         @click.stop
-
     ></div>
 
-    <div class="调整整体位置" v-if="nowIndex!=='1'">
+    <div v-if="nowIndex!=='1'" class="调整整体位置">
       <el-button-group
-          v-if="nowIndex == index"
       >
-        <el-button type="primary" :icon="Aim" size="small"
+        <el-button :icon="Aim" size="small" title="调整组件位置"
+                   type="primary"
                    @mousedown="mousedown('all', $event)"
                    @click.stop
-                   title="调整组件位置"
         ></el-button>
-        <el-button type="danger" @click.stop="删除" :icon="Delete" size="small"
-                   title="删除组件"
+        <el-button :icon="Delete" size="small" title="删除组件" type="danger"
+                   @click.stop="删除"
         ></el-button>
       </el-button-group>
     </div>
@@ -89,8 +85,15 @@ export default {
       let isFirst = true;
       let dthis = this;
 
-      let newLeft2 = dthis.$refs.shapeRef.offsetLeft;
-      let newTop2 = dthis.$refs.shapeRef.offsetTop;
+      console.log("鼠标按下", this.startX + " " + this.startY)
+      // let newLeft2 = dthis.$refs.shapeRef.offsetLeft;
+      // let newTop2 = dthis.$refs.shapeRef.offsetTop;
+      // let newWidth2 = dthis.$refs.shapeRef.offsetWidth;
+      // let newHeight2 = dthis.$refs.shapeRef.offsetHeight;
+      let newLeft2 = parseInt(dthis.item_data.left);
+      let newTop2 = parseInt(dthis.item_data.top);
+      // let newWidth2 = parseInt(dthis.item_data.width);
+      // let newHeight2 = parseInt(dthis.item_data.height);
       let newWidth2 = dthis.$refs.shapeRef.offsetWidth;
       let newHeight2 = dthis.$refs.shapeRef.offsetHeight;
 
@@ -99,6 +102,7 @@ export default {
 
         dthis.clientX = event.clientX;
         dthis.clientY = event.clientY;
+
         if (isFirst) {
           isFirst = false
           return
@@ -120,6 +124,8 @@ export default {
           //调整左边顶边
           newLeft += moveX;
           newTop += moveY;
+
+          // console.log("移动后的位置",  dthis.index,newLeft, newTop);
           newWidth = dthis.$refs.shapeRef.width;
           newHeight = dthis.$refs.shapeRef.height;
           dthis.$emit('update-style', dthis.item_data, {
@@ -162,6 +168,13 @@ export default {
           return
         }
         // console.log("移动后的位置",  dthis.index,newLeft, newTop, newWidth, newHeight);
+        // if (dthis.item_data.width.toString().indexOf("%") > -1) {
+        //   newWidth = dthis.item_data.width
+        // }
+        // if (dthis.item_data.height.toString().indexOf("%") > -1) {
+        //   newHeight = dthis.item_data.height
+        // }
+
         dthis.$emit('update-style', dthis.item_data, {
           left: newLeft,
           top: newTop,
@@ -187,8 +200,8 @@ export default {
 <style scoped>
 .Shape {
   position: absolute;
-
 }
+
 
 .dot {
   width: 6px;
@@ -196,7 +209,7 @@ export default {
   background-color: #057aff;
   position: absolute;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 666;
 
 }
 
@@ -241,7 +254,7 @@ export default {
 }
 
 .bottom-left {
-  bottom: -6px;
+  bottom: -8px;
   left: -6px;
   cursor: sw-resize;
 }
@@ -257,7 +270,7 @@ export default {
   width: 100px;
   height: 24px;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 666;
   margin-top: -40px;
   margin-left: 50%;
   position: absolute;
@@ -265,5 +278,12 @@ export default {
   left: 0;
 }
 
+.Shape div {
+  pointer-events: auto;
+}
+
+.Shape {
+  background: none !important;
+}
 
 </style>

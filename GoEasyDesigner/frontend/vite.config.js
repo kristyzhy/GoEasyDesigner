@@ -5,16 +5,27 @@ import vue from '@vitejs/plugin-vue'
 
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
+import {ElementPlusResolver, TDesignResolver} from 'unplugin-vue-components/resolvers'
 import IconsResolver from 'unplugin-icons/resolver'
-
-
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    server: {
+        host: "0.0.0.0",
+        hmr: {
+            host: 'localhost',
+            protocol: 'ws',
+        }
+    },
+    preview: {
+        host: "0.0.0.0",
+        port: 3000,
+    },
+    publicDir: "public",
     plugins: [
         vue(),
-        // ...
+        vueJsx(),
         AutoImport({
             imports: ['vue'],
             resolvers: [
@@ -25,6 +36,9 @@ export default defineConfig({
                 IconsResolver({
                     prefix: 'Icon',
                 }),
+                TDesignResolver({
+                    library: 'vue-next'
+                })
             ],
         }),
         Components({
@@ -37,6 +51,9 @@ export default defineConfig({
                 // Auto register Element Plus components
                 // 自动导入 Element Plus 组件
                 ElementPlusResolver(),
+                TDesignResolver({
+                    library: 'vue-next'
+                })
             ],
         }),
 
@@ -45,5 +62,10 @@ export default defineConfig({
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
+    },
+    esbuild: {
+        jsxFactory: 'h',
+        jsxFragment: 'Fragment',
+        // jsxInject: `import React from 'react'`,
     },
 })

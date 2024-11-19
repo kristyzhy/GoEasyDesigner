@@ -1,0 +1,91 @@
+export default {
+    top: "150",
+    left: "440",
+    width: "300",
+    height: "200",
+    value: "0",
+    noPlace: true,
+    visible: true,
+    disable: false,
+    zIndex: 0,
+    layoutMethod: "header-main",
+    childComponents: [
+        {
+            componentName: "elContainer",
+            name: "ContentAreaHeader",
+            area: "header",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            // background: "#fff",
+            position: "relative",
+            noPlace: false,
+            noDrag: true,
+            visible: true,
+            disable: false,
+            pid: 0,
+            zIndex: 0,
+            childComponents: []
+        },
+
+        {
+            componentName: "elContainer",
+            name: "ContentAreaMain",
+            area: "main",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            // background: "red",
+            position: "relative",
+            noPlace: false,
+            noDrag: true,
+            visible: true,
+            disable: false,
+            zIndex: 0,
+            pid: 0,
+            childComponents: []
+        },
+
+        {
+            componentName: "elContainer",
+            name: "ContentAreaFooter",
+            area: "footer",
+
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            // background: "green",
+            position: "relative",
+            noPlace: false,
+            noDrag: true,
+            visible: true,
+            disable: false,
+            zIndex: 0,
+            pid: 0,
+            childComponents: []
+        },
+
+        {
+            componentName: "elContainer",
+            name: "ContentAreaAside",
+            area: "aside",
+            top: "0",
+            left: "0",
+            width: "100px",
+            height: "100%",
+            // background: "green",
+            position: "relative",
+            noPlace: false,
+            noDrag: true,
+            visible: true,
+            disable: false,
+            zIndex: 0,
+            pid: 0,
+            childComponents: []
+        },
+
+    ]
+}

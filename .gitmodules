@@ -1,0 +1,3 @@
+[submodule "go-easy-demo"]
+	path = go-easy-demo
+	url = https://github.com/duolabmeng6/wails-template-vue-go-easy
